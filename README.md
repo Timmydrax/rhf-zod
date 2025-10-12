@@ -7,12 +7,12 @@ This project showcases how to build user authentication interfaces — including
 
 ## 🚀 Features
 
-- 🔐 **Sign In / Sign Up** forms with real-time validation  
-- 🧠 **Zod** schema validation for type-safe and declarative rules  
-- ⚡ **React Hook Form** for performant form state management  
-- 💅 **Shadcn/UI** components for a consistent, accessible design  
-- 🧭 **React Router DOM** for seamless page navigation  
-- 🧩 Built with **TypeScript** for scalability and type safety  
+- 🔐 **Sign In / Sign Up** forms with real-time validation
+- 🧠 **Zod** schema validation for type-safe and declarative rules
+- ⚡ **React Hook Form** for performant form state management
+- 💅 **Shadcn/UI** components for a consistent, accessible design
+- 🧭 **React Router DOM** for seamless page navigation
+- 🧩 Built with **TypeScript** for scalability and type safety
 - 🎨 Responsive and minimal UI using **Tailwind CSS**
 
 ---
@@ -49,3 +49,18 @@ src/
  │    └── route.tsx
  ├── App.tsx
  └── main.tsx
+
+```
+
+## 1️⃣ Clone the repository
+
+git clone https://github.com/Timmydrax/onboarding-flow.git
+cd onboarding-flow
+
+## 2️⃣ Install dependencies
+
+npm install
+
+## 3️⃣ Start the development server
+
+npm run dev
