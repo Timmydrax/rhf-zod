@@ -55,6 +55,7 @@ src/
 ## 1️⃣ Clone the repository
 
 git clone https://github.com/Timmydrax/onboarding-flow.git
+
 cd onboarding-flow
 
 ## 2️⃣ Install dependencies
