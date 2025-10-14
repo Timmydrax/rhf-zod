@@ -1,3 +1,4 @@
+// import { resolve } from "path";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 type FormFields = {
@@ -6,9 +7,14 @@ type FormFields = {
 };
 
 export default function SignIn() {
-  const { register, handleSubmit } = useForm<FormFields>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormFields>();
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    await new Promise((resolve: TimerHandler) => setTimeout(resolve, 1000));
     console.log(data);
   };
 
@@ -29,15 +35,25 @@ export default function SignIn() {
               Email Address
             </label>
             <input
-              {...register("email", { required: true })}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Please enter a valid email address",
+                },
+              })}
               id="email"
               type="email"
               placeholder="Enter your email"
+              autoComplete="email"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
                          text-gray-700 placeholder-gray-400"
             />
           </div>
+          {errors.email && (
+            <div className="text-red-500">{errors.email.message}</div>
+          )}
 
           {/* Password Field */}
           <div>
@@ -48,23 +64,34 @@ export default function SignIn() {
               Password
             </label>
             <input
-              {...register("password", { required: true })}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must have at least 8 characters",
+                },
+              })}
               id="password"
               type="password"
               placeholder="Enter your password"
+              autoComplete="current-password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
                          text-gray-700 placeholder-gray-400"
             />
           </div>
+          {errors.password && (
+            <div className="text-red-500">{errors.password.message}</div>
+          )}
 
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full py-2.5 bg-blue-600 text-white font-medium rounded-lg 
                        hover:bg-blue-700 transition-all duration-200 shadow-md"
           >
-            Sign In
+            {isSubmitting ? "Submitting" : "Sign In"}
           </button>
 
           {/* Optional Links */}
