@@ -1,4 +1,3 @@
-// import { resolve } from "path";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 type FormFields = {
@@ -10,12 +9,26 @@ export default function SignIn() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>();
+  } = useForm<FormFields>({
+    defaultValues: {
+      email: "bermu@plab.com",
+    },
+  });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    await new Promise((resolve: TimerHandler) => setTimeout(resolve, 1000));
-    console.log(data);
+    try {
+      await new Promise((resolve: TimerHandler) => setTimeout(resolve, 1000));
+      console.log(data);
+
+      throw new Error();
+    } catch (error) {
+      setError("root", {
+        message: "Email already taken",
+      });
+      console.error(error);
+    }
   };
 
   return (
@@ -89,10 +102,13 @@ export default function SignIn() {
             type="submit"
             disabled={isSubmitting}
             className="w-full py-2.5 bg-blue-600 text-white font-medium rounded-lg 
-                       hover:bg-blue-700 transition-all duration-200 shadow-md"
+            hover:bg-blue-700 transition-all duration-200 shadow-md"
           >
             {isSubmitting ? "Submitting" : "Sign In"}
           </button>
+          {errors.root && (
+            <div className="text-red-500">{errors.root.message}</div>
+          )}
 
           {/* Optional Links */}
           <p className="text-center text-sm text-gray-600 mt-3">
