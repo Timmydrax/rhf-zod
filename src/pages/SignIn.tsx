@@ -1,9 +1,15 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormFields = {
-  email: string;
-  password: string;
-};
+const schema = z.object({
+  email: z.email(),
+  password: z.string().min(8),
+});
+
+// zod validation.
+type FormFields = z.infer<typeof schema>;
+
 
 export default function SignIn() {
   const {
@@ -15,6 +21,7 @@ export default function SignIn() {
     defaultValues: {
       email: "bermu@plab.com",
     },
+    resolver: zodResolver(schema),
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
@@ -48,13 +55,7 @@ export default function SignIn() {
               Email Address
             </label>
             <input
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Please enter a valid email address",
-                },
-              })}
+              {...register("email")}
               id="email"
               type="email"
               placeholder="Enter your email"
@@ -77,13 +78,7 @@ export default function SignIn() {
               Password
             </label>
             <input
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
-                },
-              })}
+              {...register("password")}
               id="password"
               type="password"
               placeholder="Enter your password"
